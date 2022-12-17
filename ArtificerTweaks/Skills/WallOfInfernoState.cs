@@ -10,10 +10,11 @@ namespace HIFUArtificerTweaks.Skills
     {
         public float duration = 2f;
         public float timer;
-        public float interval = 1f;
+        public float interval = 0.25f;
 
         public GameObject wallPrefab = WallOfInfernoProjectile.prefab;
         private Vector3 dashVector;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -41,21 +42,24 @@ namespace HIFUArtificerTweaks.Skills
                 else if (timer >= interval)
                 {
                     //Vector3 vector = Vector3.Cross(Vector3.up, characterBody.transform.forward);
-                    var vector = characterBody.transform.forward;
-                    bool flag = Util.CheckRoll(critStat, characterBody.master);
+                    var vector = Vector3.up;
+                    // bool flag = Util.CheckRoll(critStat, characterBody.master);
                     //ProjectileManager.instance.FireProjectile(wallPrefab, characterBody.corePosition, Util.QuaternionSafeLookRotation(vector), gameObject, damageStat * 1f, 0f, flag, DamageColorIndex.Default, null, -1f);
-                    
-                    FireProjectileInfo info = new();
-                    info.projectilePrefab = wallPrefab;
-                    info.position = characterBody.corePosition;
-                    info.rotation = Util.QuaternionSafeLookRotation(-vector);
-                    info.owner = gameObject;
-                    info.damage = damageStat;
-                    info.force = 0f;
-                    info.damageColorIndex = DamageColorIndex.Default;
+
+                    FireProjectileInfo info = new()
+                    {
+                        projectilePrefab = wallPrefab,
+                        position = characterBody.corePosition,
+                        rotation = Util.QuaternionSafeLookRotation(vector),
+                        owner = gameObject,
+                        damage = damageStat,
+                        force = 0f,
+                        damageColorIndex = DamageColorIndex.Default,
+                        crit = Util.CheckRoll(critStat, characterBody.master)
+                    };
 
                     ProjectileManager.instance.FireProjectile(info);
-                    
+
                     Util.PlaySound(EntityStates.Mage.Weapon.Flamethrower.endAttackSoundString, gameObject);
 
                     timer = 0f;
