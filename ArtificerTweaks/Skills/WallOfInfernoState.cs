@@ -10,7 +10,7 @@ namespace HIFUArtificerTweaks.Skills
     {
         public float duration = 2f;
         public float timer;
-        public float interval = 0.25f;
+        public float interval = 1f;
 
         public GameObject wallPrefab = WallOfInfernoProjectile.prefab;
         private Vector3 dashVector;
@@ -57,6 +57,7 @@ namespace HIFUArtificerTweaks.Skills
                     ProjectileManager.instance.FireProjectile(info);
                     
                     Util.PlaySound(EntityStates.Mage.Weapon.Flamethrower.endAttackSoundString, gameObject);
+
                     timer = 0f;
                 }
             }
