@@ -46,9 +46,10 @@ namespace HIFUArtificerTweaks.Skilldefs
             LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_NAME", "Wall of Inferno");
             LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_DESCRIPTION", "<style=cIsDamage>Ignite</style>. Rush forward, summoning pillars of fire behind you that deal <style=cIsDamage>100% damage per second</style> and explode.");
             /* maybe aside you instead? wanna make this skill really aggressive tho
-            collider is fucked up idk if it even works
+            collider is fucked up idk
             movement is janky
             visual looks kinda bad rn, not sure how to properly scale it
+            vector math is fucked i hate and it doesn't work properly
             */
             ContentAddition.AddSkillDef(sd);
         }
