@@ -24,6 +24,14 @@ namespace HIFUArtificerTweaks.Projectiles
             impact.blastRadius = 5f;
             */
 
+            Object.Destroy(prefab.GetComponent<SphereCollider>());
+
+            var cc = prefab.AddComponent<CapsuleCollider>();
+            cc.isTrigger = false;
+            cc.center = new Vector3(0f, 0f, 0f);
+            cc.radius = 1f;
+            cc.height = 1f;
+
             var hitbox = prefab.transform.GetChild(0);
             hitbox.transform.localScale = new Vector3(5.5f, 5.5f, 20f);
             hitbox.transform.localPosition = new Vector3(0, 0f, 8f);
@@ -39,7 +47,7 @@ namespace HIFUArtificerTweaks.Projectiles
             var psoi = prefab.AddComponent<ProjectileStickOnImpact>();
             psoi.ignoreCharacters = true;
             psoi.ignoreWorld = false;
-            psoi.alignNormals = true;
+            psoi.alignNormals = false;
 
             var ps = prefab.GetComponent<ProjectileSimple>();
             ps.lifetime = 7f;
