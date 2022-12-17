@@ -12,54 +12,35 @@ namespace HIFUArtificerTweaks.Projectiles
 
         public static void Create()
         {
-            prefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageIcewallWalkerProjectile.prefab").WaitForCompletion(), "WallOfInferno");
-            prefab.name = "WallOfInferno";
-            var what = prefab.GetComponent<ProjectileMageFirewallWalkerController>();
-            var wall2 = what.firePillarPrefab;
-            wall2.name = "WallOfInfernoPillar";
+            prefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/ElementalRings/FireTornado.prefab").WaitForCompletion(), "WallOfInfernoPillar");
 
-            var det = wall2.transform.GetChild(0);
-            Object.Destroy(det.GetComponent<MineProximityDetonator>());
+            ProjectileImpactExplosion impact = prefab.AddComponent<ProjectileImpactExplosion>();
+            impact.lifetimeExpiredSound = null;
+            impact.destroyOnEnemy = false;
+            impact.lifetime = 7f;
+            impact.impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion();
+            impact.enabled = true;
+            impact.blastRadius = 5f;
 
-            var pie = wall2.GetComponent<ProjectileImpactExplosion>();
-            pie.lifetimeExpiredSound = null;
-            pie.destroyOnEnemy = false;
-            pie.lifetime = 7f;
-            pie.impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion();
-            pie.enabled = false;
-
-            var arrowRain = wall2.AddComponent<ProjectileDotZone>();
-            arrowRain.damageCoefficient = 1f / 3f;
-            arrowRain.attackerFiltering = AttackerFiltering.NeverHitSelf;
-            arrowRain.overlapProcCoefficient = 0.25f;
-            arrowRain.fireFrequency = 20;
-            arrowRain.resetFrequency = 3;
-            arrowRain.lifetime = 7f;
-            arrowRain.impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/OmniExplosionVFXQuick.prefab").WaitForCompletion();
-
-            var hbg = wall2.AddComponent<HitBoxGroup>();
-
-            var hb = new GameObject("hitbox");
-            hb.transform.localScale = new Vector3(10f, 2f, 5f);
-            hb.AddComponent<HitBox>();
-            hb.transform.parent = wall2.transform;
-
-            hbg.hitBoxes = new HitBox[] { hb.GetComponent<HitBox>() };
-
-            var pd = wall2.GetComponent<ProjectileDamage>();
+            ProjectileDamage pd = prefab.GetComponent<ProjectileDamage>();
             pd.damageType = DamageType.IgniteOnHit;
 
-            var ghost = wall2.GetComponent<ProjectileController>();
-            var newGhost = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageFlamethrowerEffect.prefab").WaitForCompletion(), "WallOfInfernoPillarGhost");
-            newGhost.transform.localScale = new Vector3(1f, 1f, 0.5f);
-            newGhost.transform.eulerAngles = new Vector3(90, 0, 0);
-            newGhost.GetComponent<DestroyOnTimer>().duration = 7f;
-            newGhost.AddComponent<ProjectileGhostController>();
+            ProjectileOverlapAttack overlap = prefab.GetComponent<ProjectileOverlapAttack>();
+            overlap.damageCoefficient = 1f;
+            overlap.resetInterval = 1f;
+            overlap.overlapProcCoefficient = 0.5f;
 
-            var bone1 = newGhost.transform.GetChild(0);
-            var matrix = newGhost.transform.GetChild(1);
-            var ico = newGhost.transform.GetChild(2);
-            var bb = newGhost.transform.GetChild(3);
+            ProjectileController projectileController = prefab.GetComponent<ProjectileController>();
+            GameObject ghostPrefab = PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageFlamethrowerEffect.prefab").WaitForCompletion(), "WallOfInfernoPillarGhost");
+            ghostPrefab.transform.localScale = new Vector3(1f, 1f, 0.5f);
+            ghostPrefab.transform.eulerAngles = new Vector3(0, 90, 0);
+            ghostPrefab.GetComponent<DestroyOnTimer>().duration = 7f;
+            ghostPrefab.AddComponent<ProjectileGhostController>();
+
+            var bone1 = ghostPrefab.transform.GetChild(0);
+            var matrix = ghostPrefab.transform.GetChild(1);
+            var ico = ghostPrefab.transform.GetChild(2);
+            var bb = ghostPrefab.transform.GetChild(3);
             bone1.GetComponent<AnimateShaderAlpha>().timeMax = 7f;
             var stupidShit1 = matrix.GetComponent<ParticleSystem>().main;
             stupidShit1.duration = 6.4f;
@@ -72,7 +53,7 @@ namespace HIFUArtificerTweaks.Projectiles
 
             // lr.widthMultiplier = 10f;
             // lr.endColor = new Color32(255, 255, 255, 80);
-            ghost.ghostPrefab = newGhost;
+            projectileController.ghostPrefab = ghostPrefab;
         }
     }
 }
