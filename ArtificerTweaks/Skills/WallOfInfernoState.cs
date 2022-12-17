@@ -10,7 +10,7 @@ namespace HIFUArtificerTweaks.Skills
     {
         public float duration = 2f;
         public float timer;
-        public float interval = 0.25f;
+        public float interval = 1f;
 
         public GameObject wallPrefab = WallOfInfernoProjectile.prefab;
 
@@ -39,11 +39,22 @@ namespace HIFUArtificerTweaks.Skills
                 else if (timer >= interval)
                 {
                     //Vector3 vector = Vector3.Cross(Vector3.up, characterBody.transform.forward);
-                    var vector = characterBody.transform.forward;
-                    bool flag = Util.CheckRoll(critStat, characterBody.master);
-                    //ProjectileManager.instance.FireProjectile(wallPrefab, characterBody.corePosition, Util.QuaternionSafeLookRotation(vector), gameObject, damageStat * 1f, 0f, flag, DamageColorIndex.Default, null, -1f);
-                    ProjectileManager.instance.FireProjectile(wallPrefab, characterBody.corePosition, Util.QuaternionSafeLookRotation(-vector), gameObject, damageStat * 1f, 0f, flag, DamageColorIndex.Default, null, -1f);
+                    //var vector = characterBody.transform.forward;
+                    var vector = GetAimRay().direction;
+                    FireProjectileInfo info = new()
+                    {
+                        projectilePrefab = wallPrefab,
+                        position = characterBody.corePosition,
+                        rotation = Util.QuaternionSafeLookRotation(vector),
+                        owner = gameObject,
+                        damage = damageStat,
+                        force = 0,
+                        damageColorIndex = DamageColorIndex.Default,
+                        crit = Util.CheckRoll(critStat, characterBody.master)
+                    };
+                    ProjectileManager.instance.FireProjectile(info);
                     Util.PlaySound(EntityStates.Mage.Weapon.Flamethrower.endAttackSoundString, gameObject);
+
                     timer = 0f;
                 }
             }
