@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 namespace HAT
 {
@@ -29,10 +30,22 @@ namespace HAT
 
         private string version = PluginVersion;
 
+        public static ConfigEntry<float> flamewallDamage;
+        public static ConfigEntry<float> flamewallSpeed;
+        public static ConfigEntry<float> flamewallProcCoeff;
+
+        public static AssetBundle hifuartificertweaks;
+
         public void Awake()
         {
             HATLogger = Logger;
             HATConfig = Config;
+
+            hifuartificertweaks = AssetBundle.LoadFromFile(Assembly.GetExecutingAssembly().Location.Replace("HIFUArtificerTweaks.dll", "hifuartificertweaks"));
+
+            flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.8f, "Decimal. Default is 0.8");
+            flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.6f, "Default is 1.6");
+            flamewallProcCoeff = Config.Bind(": Utility :: Flamewall", "Proc Coefficient", 0.15f, "Default is 0.15");
 
             WallOfInfernoProjectile.Create();
             WallOfInfernoSD.Create();
@@ -67,6 +80,8 @@ namespace HAT
                     based.Init();
                 }
             }
+
+            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
         }
 
         public bool ValidateTweak(TweakBase tb)

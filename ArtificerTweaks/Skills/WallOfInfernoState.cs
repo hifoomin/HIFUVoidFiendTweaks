@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using HAT;
 using HIFUArtificerTweaks.Projectiles;
 using RoR2;
 using RoR2.Projectile;
@@ -11,17 +12,47 @@ namespace HIFUArtificerTweaks.Skills
         public float duration = 2f;
         public float timer;
         public float interval = 0.25f;
-
+        public float speedMultiplier = Main.flamewallSpeed.Value;
+        private Vector3 idealDirection;
         public GameObject wallPrefab = WallOfInfernoProjectile.prefab;
-        private Vector3 dashVector;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            if (isAuthority)
+            {
+                if (inputBank)
+                {
+                    idealDirection = inputBank.aimDirection;
+                    idealDirection.y = 0f;
+                }
+                UpdateDirection();
+            }
+
+            if (modelLocator) modelLocator.normalizeToFloor = true;
+            if (characterDirection) characterDirection.forward = idealDirection;
+
             characterBody.SetAimTimer(duration + 1f);
             PlayAnimation("Gesture, Additive", "PrepWall", "PrepWall.playbackRate", duration);
-            dashVector = GetVector();
             AkSoundEngine.PostEvent(2855368448, gameObject); // Play_item_use_fireballDash_start
+        }
+
+        private void UpdateDirection()
+        {
+            if (inputBank)
+            {
+                Vector2 vector = Util.Vector3XZToVector2XY(inputBank.moveVector);
+                if (vector != Vector2.zero)
+                {
+                    vector.Normalize();
+                    idealDirection = new Vector3(vector.x, 0f, vector.y).normalized;
+                }
+            }
+        }
+
+        private Vector3 GetIdealVelocity()
+        {
+            return characterDirection.forward * characterBody.moveSpeed * speedMultiplier;
         }
 
         public override void FixedUpdate()
@@ -30,21 +61,27 @@ namespace HIFUArtificerTweaks.Skills
             timer += Time.fixedDeltaTime;
             if (isAuthority)
             {
-                if (characterMotor && characterDirection)
+                if (characterBody)
                 {
-                    characterMotor.velocity = Vector3.zero;
-                    characterMotor.rootMotion += dashVector * (moveSpeedStat * 2f * Time.fixedDeltaTime);
+                    characterBody.isSprinting = true;
                 }
+                if (characterDirection)
+                {
+                    characterDirection.moveVector = idealDirection;
+                    if (characterMotor && !characterMotor.disableAirControlUntilCollision)
+                    {
+                        characterMotor.rootMotion += GetIdealVelocity() * Time.fixedDeltaTime;
+                    }
+                }
+                UpdateDirection();
+
                 if (fixedAge >= duration)
                 {
                     outer.SetNextStateToMain();
                 }
                 else if (timer >= interval)
                 {
-                    //Vector3 vector = Vector3.Cross(Vector3.up, characterBody.transform.forward);
                     var vector = Vector3.up;
-                    // bool flag = Util.CheckRoll(critStat, characterBody.master);
-                    //ProjectileManager.instance.FireProjectile(wallPrefab, characterBody.corePosition, Util.QuaternionSafeLookRotation(vector), gameObject, damageStat * 1f, 0f, flag, DamageColorIndex.Default, null, -1f);
 
                     FireProjectileInfo info = new()
                     {
@@ -70,20 +107,25 @@ namespace HIFUArtificerTweaks.Skills
         public override void OnExit()
         {
             base.OnExit();
-            PlayAnimation("Gesture, Additive", "FireWall");
+            if (!outer.destroying && characterBody)
+            {
+                PlayAnimation("Gesture, Additive", "FireWall");
+                characterBody.isSprinting = false;
+            }
+            if (characterMotor && !characterMotor.disableAirControlUntilCollision)
+            {
+                characterMotor.velocity += GetIdealVelocity();
+            }
+            if (modelLocator)
+            {
+                modelLocator.normalizeToFloor = false;
+            }
             AkSoundEngine.PostEvent(561188827, gameObject); // Play_item_use_fireballDash_explode
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Skill;
-        }
-
-        protected Vector3 GetVector()
-        {
-            Vector3 direction = inputBank.aimDirection;
-            direction.y = 0;
-            return direction.normalized;
         }
     }
 }

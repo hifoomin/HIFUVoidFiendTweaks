@@ -1,8 +1,6 @@
 ﻿using EntityStates;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using RoR2;
-using RoR2.Projectile;
 using RoR2.Skills;
 using System;
 using UnityEngine;
@@ -15,6 +13,7 @@ namespace HAT.Skills
         public static float AoE;
         public static float Cooldown;
         public static float Damage;
+        public static float dashSpeed;
 
         public override string Name => ": Special :: Ion Surge";
 
@@ -27,6 +26,7 @@ namespace HAT.Skills
             AoE = ConfigOption(14f, "Area of Effect", "Vanilla is 14");
             Cooldown = ConfigOption(5f, "Cooldown", "Vanilla is 8");
             Damage = ConfigOption(8f, "Damage", "Decimal. Vanilla is 8");
+            dashSpeed = ConfigOption(3.5f, "Dash Speed Multiplier", "Default is 3.5");
             base.Init();
         }
 
@@ -44,8 +44,8 @@ namespace HAT.Skills
                 x => x.MatchLdarg(0),
                 x => x.MatchLdfld<BaseState>("moveSpeedStat")))
             {
-                c.Emit(OpCodes.Ldarg_0);
                 c.Index++;
+                c.Emit(OpCodes.Ldarg_0);
                 c.EmitDelegate<Func<float>>(() =>
                 {
                     return 10.15f;
@@ -66,7 +66,7 @@ namespace HAT.Skills
             if (self.isAuthority)
             {
                 Vector3 direction = (self.inputBank.moveVector == Vector3.zero ? Vector3.zero : self.inputBank.moveVector.normalized);
-                Vector3 a = direction.normalized * 3.5f * self.moveSpeedStat;
+                Vector3 a = direction.normalized * dashSpeed * self.moveSpeedStat;
                 self.characterMotor.Motor.ForceUnground();
                 self.characterMotor.velocity = a;
             }

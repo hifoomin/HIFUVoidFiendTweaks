@@ -1,10 +1,4 @@
-﻿using RoR2;
-using RoR2.Projectile;
-using RoR2.Skills;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-
-namespace HAT.Skills
+﻿namespace HAT.Skills
 {
     public class Flamethrower : TweakBase
     {

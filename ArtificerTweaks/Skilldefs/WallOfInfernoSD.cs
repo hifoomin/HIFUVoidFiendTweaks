@@ -1,13 +1,10 @@
 ﻿using R2API;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static RoR2.TeleporterInteraction;
 using UnityEngine;
 using RoR2.Skills;
 using HIFUArtificerTweaks.Skills;
 using UnityEngine.AddressableAssets;
 using RoR2;
+using HAT;
 
 namespace HIFUArtificerTweaks.Skilldefs
 {
@@ -37,14 +34,14 @@ namespace HIFUArtificerTweaks.Skilldefs
             sd.isCombatSkill = true;
             sd.mustKeyPress = false;
             sd.rechargeStock = 1;
-            sd.icon = null;
+            sd.icon = Main.hifuartificertweaks.LoadAsset<Sprite>("Assets/Flamewall.png");
             sd.skillNameToken = nameToken;
             sd.skillDescriptionToken = "HAT_MAGE_UTILITY_FIRE_DESCRIPTION";
             sd.stockToConsume = 1;
-            sd.keywordTokens = new string[] { "KEYWORD_IGNITE" };
+            sd.keywordTokens = new string[] { "KEYWORD_IGNITE", "KEYWORD_AGILE" };
 
-            LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_NAME", "Wall of Inferno");
-            LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_DESCRIPTION", "<style=cIsDamage>Ignite</style>. Rush forward, summoning pillars of fire behind you that deal <style=cIsDamage>100% damage per second</style>.");
+            LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_NAME", "Flamewall");
+            LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_DESCRIPTION", "<style=cIsUtility>Agile</style>. <style=cIsDamage>Ignite</style>. Rush forward, summoning pillars of fire in your wake that deal <style=cIsDamage>" + (Main.flamewallDamage.Value * 100) + "% damage per second</style>.");
             ContentAddition.AddSkillDef(sd);
         }
     }

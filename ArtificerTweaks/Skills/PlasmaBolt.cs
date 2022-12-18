@@ -1,6 +1,4 @@
-﻿using RoR2;
-using RoR2.Projectile;
-using RoR2.Skills;
+﻿using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -20,7 +18,7 @@ namespace HAT.Skills
         public override void Init()
         {
             AoE = ConfigOption(6f, "Area of Effect", "Vanilla is 6");
-            Damage = ConfigOption(2.9f, "Damage", "Decimal. Vanilla is 2.8");
+            Damage = ConfigOption(3f, "Damage", "Decimal. Vanilla is 2.8");
             base.Init();
         }
 
