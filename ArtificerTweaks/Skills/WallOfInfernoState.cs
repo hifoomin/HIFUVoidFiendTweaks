@@ -15,16 +15,26 @@ namespace HIFUArtificerTweaks.Skills
         public float speedMultiplier = Main.flamewallSpeed.Value;
         private Vector3 idealDirection;
         public GameObject wallPrefab = WallOfInfernoProjectile.prefab;
+        public SkillLocator sl;
 
         public override void OnEnter()
         {
             base.OnEnter();
+            sl = characterBody.GetComponent<SkillLocator>();
             if (isAuthority)
             {
                 if (inputBank)
                 {
                     idealDirection = inputBank.aimDirection;
                     idealDirection.y = 0f;
+                }
+                if (sl)
+                {
+                    if (sl.special.skillNameToken == "MAGE_SPECIAL_FIRE_NAME")
+                    {
+                        sl.special.skillDef.canceledFromSprinting = false;
+                        sl.special.skillDef.cancelSprintingOnActivation = false;
+                    }
                 }
                 UpdateDirection();
             }
@@ -119,6 +129,14 @@ namespace HIFUArtificerTweaks.Skills
             if (modelLocator)
             {
                 modelLocator.normalizeToFloor = false;
+            }
+            if (isAuthority && sl)
+            {
+                if (sl.special.skillNameToken == "MAGE_SPECIAL_FIRE_NAME")
+                {
+                    sl.special.skillDef.canceledFromSprinting = true;
+                    sl.special.skillDef.cancelSprintingOnActivation = true;
+                }
             }
             AkSoundEngine.PostEvent(561188827, gameObject); // Play_item_use_fireballDash_explode
         }

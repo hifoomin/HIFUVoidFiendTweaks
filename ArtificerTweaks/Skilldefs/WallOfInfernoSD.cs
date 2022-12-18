@@ -24,20 +24,26 @@ namespace HIFUArtificerTweaks.Skilldefs
             sd = ScriptableObject.CreateInstance<SkillDef>();
             sd.activationState = new(typeof(WallOfInfernoState));
             sd.activationStateMachineName = "Wall";
-            sd.baseMaxStock = 1;
-            sd.baseRechargeInterval = 12f;
-            sd.beginSkillCooldownOnSkillEnd = true;
-            sd.canceledFromSprinting = false;
-            sd.cancelSprintingOnActivation = false;
-            sd.fullRestockOnAssign = true;
             sd.interruptPriority = EntityStates.InterruptPriority.PrioritySkill;
-            sd.isCombatSkill = true;
-            sd.mustKeyPress = true;
+
+            sd.baseRechargeInterval = 12f;
+            sd.baseMaxStock = 1;
             sd.rechargeStock = 1;
+            sd.requiredStock = 1;
+            sd.stockToConsume = 1;
+
+            sd.resetCooldownTimerOnUse = false;
+            sd.fullRestockOnAssign = true;
+            sd.dontAllowPastMaxStocks = false;
+            sd.beginSkillCooldownOnSkillEnd = true;
+            sd.cancelSprintingOnActivation = false;
+            sd.canceledFromSprinting = false;
+            sd.isCombatSkill = true;
+            sd.mustKeyPress = false;
+
             sd.icon = Main.hifuartificertweaks.LoadAsset<Sprite>("Assets/Flamewall.png");
             sd.skillNameToken = nameToken;
             sd.skillDescriptionToken = "HAT_MAGE_UTILITY_FIRE_DESCRIPTION";
-            sd.stockToConsume = 1;
             sd.keywordTokens = new string[] { "KEYWORD_IGNITE", "KEYWORD_AGILE" };
 
             LanguageAPI.Add("HAT_MAGE_UTILITY_FIRE_NAME", "Flamewall");
