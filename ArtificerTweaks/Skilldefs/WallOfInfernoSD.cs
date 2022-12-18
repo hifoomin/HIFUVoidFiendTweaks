@@ -32,7 +32,7 @@ namespace HIFUArtificerTweaks.Skilldefs
             sd.fullRestockOnAssign = true;
             sd.interruptPriority = EntityStates.InterruptPriority.PrioritySkill;
             sd.isCombatSkill = true;
-            sd.mustKeyPress = false;
+            sd.mustKeyPress = true;
             sd.rechargeStock = 1;
             sd.icon = Main.hifuartificertweaks.LoadAsset<Sprite>("Assets/Flamewall.png");
             sd.skillNameToken = nameToken;

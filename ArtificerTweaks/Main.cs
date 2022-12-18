@@ -43,7 +43,7 @@ namespace HAT
 
             hifuartificertweaks = AssetBundle.LoadFromFile(Assembly.GetExecutingAssembly().Location.Replace("HIFUArtificerTweaks.dll", "hifuartificertweaks"));
 
-            flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.8f, "Decimal. Default is 0.8");
+            flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.75f, "Decimal. Default is 0.75");
             flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.35f, "Default is 1.35");
             flamewallProcCoeff = Config.Bind(": Utility :: Flamewall", "Proc Coefficient", 0.15f, "Default is 0.15");
 
@@ -80,8 +80,6 @@ namespace HAT
                     based.Init();
                 }
             }
-
-            On.RoR2.Networking.NetworkManagerSystemSteam.OnClientConnect += (s, u, t) => { };
         }
 
         public bool ValidateTweak(TweakBase tb)
