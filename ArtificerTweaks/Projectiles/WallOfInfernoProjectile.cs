@@ -98,6 +98,8 @@ namespace HIFUArtificerTweaks.Projectiles
             asa.timeMax = 7f;
 
             projectileController.ghostPrefab = ghostPrefab;
+
+            ContentAddition.AddProjectile(prefab);
         }
     }
 }

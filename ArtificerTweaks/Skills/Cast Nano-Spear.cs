@@ -17,7 +17,7 @@ namespace HAT.Skills
         {
             minDamage = ConfigOption(4f, "Minimum Damage", "Decimal. Vanilla is 4");
             maxDamage = ConfigOption(16f, "Maximum Damage", "Decimal. Vanilla is 12");
-            castTime = ConfigOption(2f, "Max Charge Time", "Vanilla is 2");
+            castTime = ConfigOption(1.5f, "Max Charge Time", "Vanilla is 2");
             base.Init();
         }
 

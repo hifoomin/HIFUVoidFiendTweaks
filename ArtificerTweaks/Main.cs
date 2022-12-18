@@ -44,8 +44,8 @@ namespace HAT
             hifuartificertweaks = AssetBundle.LoadFromFile(Assembly.GetExecutingAssembly().Location.Replace("HIFUArtificerTweaks.dll", "hifuartificertweaks"));
 
             flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.8f, "Decimal. Default is 0.8");
-            flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.6f, "Default is 1.6");
-            flamewallProcCoeff = Config.Bind(": Utility :: Flamewall", "Proc Coefficient", 0.15f, "Default is 0.15");
+            flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.35f, "Default is 1.35");
+            flamewallProcCoeff = Config.Bind(": Utility :: Flamewall", "Proc Coefficient", 0.1f, "Default is 0.1");
 
             WallOfInfernoProjectile.Create();
             WallOfInfernoSD.Create();
