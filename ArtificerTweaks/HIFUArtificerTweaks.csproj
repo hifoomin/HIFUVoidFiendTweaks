@@ -57,9 +57,14 @@
       <HintPath>libs\ProBuilderMeshOps.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="R2API">
-      <HintPath>libs\R2API.dll</HintPath>
-      <Private>false</Private>
+    <Reference Include="R2API.ContentManagement">
+      <HintPath>..\..\..\..\R2API.ContentManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="R2API.Language">
+      <HintPath>..\..\..\..\R2API.Language.dll</HintPath>
+    </Reference>
+    <Reference Include="R2API.Prefab">
+      <HintPath>..\..\..\..\R2API.Prefab.dll</HintPath>
     </Reference>
     <Reference Include="Rewired_Windows_Lib">
       <HintPath>libs\Rewired_Windows_Lib.dll</HintPath>

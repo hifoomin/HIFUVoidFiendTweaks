@@ -5,7 +5,7 @@ using HIFUArtificerTweaks;
 using HIFUArtificerTweaks.Projectiles;
 using HIFUArtificerTweaks.Skilldefs;
 using R2API;
-using R2API.Utils;
+using R2API.ContentManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +14,17 @@ using UnityEngine;
 
 namespace HAT
 {
-    [BepInDependency(R2API.R2API.PluginGUID)]
+    [BepInDependency(LanguageAPI.PluginGUID)]
+    [BepInDependency(PrefabAPI.PluginGUID)]
+    [BepInDependency(R2APIContentManager.PluginGUID)]
     [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
-    [R2APISubmoduleDependency(nameof(LanguageAPI), nameof(PrefabAPI))]
     public class Main : BaseUnityPlugin
     {
         public const string PluginGUID = PluginAuthor + "." + PluginName;
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUArtificerTweaks";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.1";
 
         public static ConfigFile HATConfig;
         public static ManualLogSource HATLogger;
@@ -43,8 +44,8 @@ namespace HAT
 
             hifuartificertweaks = AssetBundle.LoadFromFile(Assembly.GetExecutingAssembly().Location.Replace("HIFUArtificerTweaks.dll", "hifuartificertweaks"));
 
-            flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.75f, "Decimal. Default is 0.75");
-            flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.35f, "Default is 1.35");
+            flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.7f, "Decimal. Default is 0.7");
+            flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.3f, "Default is 1.3");
             flamewallProcCoeff = Config.Bind(": Utility :: Flamewall", "Proc Coefficient", 0.15f, "Default is 0.15");
 
             WallOfInfernoProjectile.Create();
