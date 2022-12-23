@@ -39,7 +39,7 @@ namespace HIFUArtificerTweaks.Skilldefs
             sd.cancelSprintingOnActivation = false;
             sd.canceledFromSprinting = false;
             sd.isCombatSkill = true;
-            sd.mustKeyPress = false;
+            sd.mustKeyPress = true;
 
             sd.icon = Main.hifuartificertweaks.LoadAsset<Sprite>("Assets/Flamewall.png");
             sd.skillNameToken = nameToken;
