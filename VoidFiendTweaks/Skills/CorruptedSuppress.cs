@@ -1,5 +1,6 @@
 ﻿using RoR2.Projectile;
 using RoR2.Skills;
+using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
@@ -12,6 +13,7 @@ namespace HVFT.Skills
         public static float CorruptionGain;
         public static int MaxCharges;
         public static float duration;
+        public static float endlag;
 
         public override string Name => "Special :: Corrupted Suppress";
 
@@ -26,13 +28,25 @@ namespace HVFT.Skills
             SelfDamage = ConfigOption(0.18f, "Self Damage", "Decimal. Vanilla is 0.25");
             MaxCharges = ConfigOption(2, "Max Charges", "Vanilla is 2");
             CorruptionGain = ConfigOption(25f, "Corruption Gain", "Vanilla is 25");
+            duration = ConfigOption(0.8f, "Animation Duration", "Vanilla is 1");
+            endlag = ConfigOption(0.3f, "Endlag", "Vanilla is 1");
             base.Init();
         }
 
         public override void Hooks()
         {
             On.EntityStates.VoidSurvivor.Weapon.CrushBase.OnEnter += CrushBase_OnEnter;
+            On.EntityStates.VoidSurvivor.Weapon.ChargeCrushBase.OnEnter += ChargeCrushBase_OnEnter;
             Changes();
+        }
+
+        private void ChargeCrushBase_OnEnter(On.EntityStates.VoidSurvivor.Weapon.ChargeCrushBase.orig_OnEnter orig, EntityStates.VoidSurvivor.Weapon.ChargeCrushBase self)
+        {
+            if (self is EntityStates.VoidSurvivor.Weapon.ChargeCrushBase)
+            {
+                self.baseDuration = duration;
+            }
+            orig(self);
         }
 
         private void CrushBase_OnEnter(On.EntityStates.VoidSurvivor.Weapon.CrushBase.orig_OnEnter orig, EntityStates.VoidSurvivor.Weapon.CrushBase self)
@@ -41,6 +55,7 @@ namespace HVFT.Skills
             {
                 self.selfHealFraction = -SelfDamage;
                 self.corruptionChange = CorruptionGain;
+                self.baseDuration = endlag;
             }
             orig(self);
         }

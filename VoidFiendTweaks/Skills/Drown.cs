@@ -39,7 +39,7 @@ namespace HVFT.Skills
             FalloffType = ConfigOption(1, "Falloff Type", "0 is None, 1 is Standard, 2 is Buckshot. Vanilla is 0");
             FourthDamage = ConfigOption(1.5f, "Fourth Hit Damage", "Decimal. Default is 1.5");
             FourthFalloff = ConfigOption(0, "Fourth Hit Falloff Type", "0 is None, 1 is Standard, 2 is Buckshot. Default is 0");
-            FourthRadius = ConfigOption(9f, "Fourth Hit Radius", "Default is 9");
+            FourthRadius = ConfigOption(7.5f, "Fourth Hit Radius", "Default is 7.5");
             base.Init();
         }
 
