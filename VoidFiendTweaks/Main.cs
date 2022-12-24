@@ -1,18 +1,19 @@
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using HIFUArtificerTweaks;
-using HIFUArtificerTweaks.Projectiles;
-using HIFUArtificerTweaks.Skilldefs;
+using RoR2.Skills;
 using R2API;
 using R2API.ContentManagement;
+using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using HIFUVoidFiendTweaks.VFX;
 
-namespace HAT
+namespace HVFT
 {
     [BepInDependency(LanguageAPI.PluginGUID)]
     [BepInDependency(PrefabAPI.PluginGUID)]
@@ -23,40 +24,43 @@ namespace HAT
         public const string PluginGUID = PluginAuthor + "." + PluginName;
 
         public const string PluginAuthor = "HIFU";
-        public const string PluginName = "HIFUArtificerTweaks";
-        public const string PluginVersion = "1.0.2";
+        public const string PluginName = "HIFUVoidFiendTweaks";
+        public const string PluginVersion = "1.0.0";
 
-        public static ConfigFile HATConfig;
-        public static ManualLogSource HATLogger;
+        public static ConfigFile HVFTConfig;
+        public static ManualLogSource HVFTLogger;
 
-        private string version = PluginVersion;
-
-        public static ConfigEntry<float> flamewallDamage;
-        public static ConfigEntry<float> flamewallSpeed;
-        public static ConfigEntry<float> flamewallProcCoeff;
-
-        public static AssetBundle hifuartificertweaks;
+        /* TODO:
+        Fix Drown having no falloff somehow (Drown.cs:52)
+        Fix VFX pointing in the wrong place (Drown.cs:115, Drown.cs:116)
+        Fix VFX size being way too small
+        Idk where the fuck corrupted tokens are uhh, maybe add a component and change them dynamically based if vf has the corruption buffdef?
+        Add Melee alt M1
+            Lunge forward, dealing x%, every third hit charges? Uncorrupted
+            Charge forward, dealing x%, every third performs a downwards slam punch? Corrupted, maybe a healing mechanic cause of -60 armor?
+        */
 
         public void Awake()
         {
-            HATLogger = Logger;
-            HATConfig = Config;
+            HVFTLogger = Logger;
+            HVFTConfig = Config;
 
-            hifuartificertweaks = AssetBundle.LoadFromFile(Assembly.GetExecutingAssembly().Location.Replace("HIFUArtificerTweaks.dll", "hifuartificertweaks"));
+            var vf = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion();
+            var esm = vf.AddComponent<EntityStateMachine>();
+            esm.customName = "Flood";
+            esm.initialStateType = new(typeof(EntityStates.Idle));
+            esm.mainStateType = new(typeof(EntityStates.Idle));
 
-            flamewallDamage = Config.Bind(": Utility :: Flamewall", "Damage", 0.7f, "Decimal. Default is 0.7");
-            flamewallSpeed = Config.Bind(": Utility :: Flamewall", "Speed Multiplier", 1.3f, "Default is 1.3");
-            flamewallProcCoeff = Config.Bind(": Utility :: Flamewall", "Proc Coefficient", 0.15f, "Default is 0.15");
+            var uncorrFlood = Addressables.LoadAssetAsync<SkillDef>("RoR2/DLC1/VoidSurvivor/ChargeMegaBlaster.asset").WaitForCompletion();
+            uncorrFlood.activationStateMachineName = "Flood";
 
-            WallOfInfernoProjectile.Create();
-            WallOfInfernoSD.Create();
-            AddUtility.Create();
+            BigTracer.Create();
 
             IEnumerable<Type> enumerable = from type in Assembly.GetExecutingAssembly().GetTypes()
                                            where !type.IsAbstract && type.IsSubclassOf(typeof(TweakBase))
                                            select type;
 
-            HATLogger.LogInfo("==+----------------==TWEAKS==----------------+==");
+            HVFTLogger.LogInfo("==+----------------==TWEAKS==----------------+==");
 
             foreach (Type type in enumerable)
             {
@@ -71,7 +75,7 @@ namespace HAT
                                             where !type.IsAbstract && type.IsSubclassOf(typeof(MiscBase))
                                             select type;
 
-            HATLogger.LogInfo("==+----------------==MISC==----------------+==");
+            HVFTLogger.LogInfo("==+----------------==MISC==----------------+==");
 
             foreach (Type type in enumerable2)
             {

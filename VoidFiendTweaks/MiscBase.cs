@@ -1,4 +1,4 @@
-﻿namespace HAT
+﻿namespace HVFT
 {
     public abstract class MiscBase
     {
@@ -7,7 +7,7 @@
 
         public T ConfigOption<T>(T value, string name, string description)
         {
-            return Main.HATConfig.Bind<T>(Name, name, value, description).Value;
+            return Main.HVFTConfig.Bind<T>(Name, name, value, description).Value;
         }
 
         public abstract void Hooks();
@@ -20,7 +20,7 @@
         public virtual void Init()
         {
             Hooks();
-            Main.HATLogger.LogInfo("Added " + Name);
+            Main.HVFTLogger.LogInfo("Added " + Name);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HAT
+namespace HVFT
 {
     public abstract class TweakBase<T> : TweakBase where T : TweakBase<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HAT
+namespace HVFT
 {
     public abstract class MiscBase<T> : MiscBase where T : MiscBase<T>
     {
