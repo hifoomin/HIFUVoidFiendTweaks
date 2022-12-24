@@ -17,7 +17,7 @@ namespace HIFUVoidFiendTweaks.Misc
 
         public override void Init()
         {
-            CPSinCombat = ConfigOption(4.5f, "Corruption Per Second In Combat", "Vanilla is 3");
+            CPSinCombat = ConfigOption(5f, "Corruption Per Second In Combat", "Vanilla is 3");
             CPSOutOfCombat = ConfigOption(3.5f, "Corruption Per Second Out Of Combat", "Vanilla is 3");
             CPerCrit = ConfigOption(0f, "Corruption Per Crit", "Vanilla is 2");
             ArmorBuff = ConfigOption(-60f, "Corruption Armor", "Vanilla is 100");
