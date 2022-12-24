@@ -25,7 +25,7 @@ namespace HVFT.Skills
 
         public override void Init()
         {
-            SelfDamage = ConfigOption(0.18f, "Self Damage", "Decimal. Vanilla is 0.25");
+            SelfDamage = ConfigOption(0.19f, "Self Damage", "Decimal. Vanilla is 0.25");
             MaxCharges = ConfigOption(2, "Max Charges", "Vanilla is 2");
             CorruptionGain = ConfigOption(25f, "Corruption Gain", "Vanilla is 25");
             duration = ConfigOption(0.8f, "Animation Duration", "Vanilla is 1");

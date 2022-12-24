@@ -22,7 +22,7 @@ namespace HVFT.Skills
 
         public override void Init()
         {
-            Healing = ConfigOption(0.2f, "Healing", "Decimal. Vanilla is 0.25");
+            Healing = ConfigOption(0.175f, "Healing", "Decimal. Vanilla is 0.25");
             MaxCharges = ConfigOption(2, "Max Charges", "Vanilla is 1");
             CorruptionLoss = ConfigOption(15f, "Corruption Loss", "Vanilla is 25");
             base.Init();
