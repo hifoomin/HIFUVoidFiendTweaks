@@ -1,10 +1,11 @@
-﻿using HIFUVoidFiendTweaks.VFX;
+﻿using HIFUVoidFiendTweaks.Skills;
+using HIFUVoidFiendTweaks.VFX;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using RoR2;
-using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UIElements.Experimental;
 
 namespace HVFT.Skills
 {
@@ -46,7 +47,20 @@ namespace HVFT.Skills
         public override void Hooks()
         {
             On.EntityStates.VoidSurvivor.Weapon.FireHandBeam.OnEnter += FireHandBeam_OnEnter;
+            CharacterBody.onBodyStartGlobal += CharacterBody_onBodyStartGlobal;
             IL.EntityStates.VoidSurvivor.Weapon.FireHandBeam.OnEnter += FireHandBeam_OnEnter1;
+        }
+
+        private void CharacterBody_onBodyStartGlobal(CharacterBody body)
+        {
+            if (body.name == "VoidSurvivor(Clone)")
+            {
+                var df = body.GetComponent<DrownFour>();
+                if (!df)
+                {
+                    body.gameObject.AddComponent<DrownFour>();
+                }
+            }
         }
 
         private void FireHandBeam_OnEnter1(ILContext il)
@@ -75,29 +89,25 @@ namespace HVFT.Skills
         {
             self.damageCoefficient = Damage;
             self.bulletRadius = Radius;
-            var vfdbc = self.characterBody.GetComponent<VoidFiendDevastatingBeamComponent>();
-            if (vfdbc == null)
+            var vf = self.characterBody.GetComponent<DrownFour>();
+            if (vf != null)
             {
-                self.characterBody.gameObject.AddComponent<VoidFiendDevastatingBeamComponent>();
-            }
-            else
-            {
-                vfdbc.FireCount++;
+                vf.FireCount++;
             }
             orig(self);
         }
     }
 
-    public class VoidFiendDevastatingBeamComponent : MonoBehaviour
+    public class DrownFour : MonoBehaviour
     {
         public int FireCount;
         public CharacterBody body => GetComponent<CharacterBody>();
         private GameObject hitEffectPrefab => Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBeamImpact.prefab").WaitForCompletion();
+
         public void FixedUpdate()
         {
             if (FireCount >= 4 && Util.HasEffectiveAuthority(body.gameObject))
             {
-
                 Util.PlaySound("Play_voidman_m2_explode", gameObject);
                 new BulletAttack
                 {
