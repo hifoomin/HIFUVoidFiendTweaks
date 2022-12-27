@@ -91,31 +91,20 @@ namespace HVFT.Skills
     public class VoidFiendDevastatingBeamComponent : MonoBehaviour
     {
         public int FireCount;
-        public CharacterBody body;
-        private GameObject hitEffectPrefab;
-
-        public void Start()
-        {
-            body = GetComponent<CharacterBody>();
-            hitEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBeamImpact.prefab").WaitForCompletion();
-        }
-
+        public CharacterBody body => GetComponent<CharacterBody>();
+        private GameObject hitEffectPrefab => Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBeamImpact.prefab").WaitForCompletion();
         public void FixedUpdate()
         {
             if (FireCount >= 4 && Util.HasEffectiveAuthority(body.gameObject))
             {
-                EffectManager.SpawnEffect(BigTracer.tracer, new EffectData
-                {
-                    origin = body.corePosition,
-                    scale = Drown.Radius
-                }, true);
+
                 Util.PlaySound("Play_voidman_m2_explode", gameObject);
                 new BulletAttack
                 {
                     owner = gameObject,
                     weapon = gameObject,
                     origin = body.corePosition,
-                    aimVector = body.inputBank ? body.inputBank.aimDirection : transform.forward,
+                    aimVector = body.inputBank.GetAimRay().direction,
                     muzzleName = "MuzzleHandBeam",
                     maxDistance = 1000,
                     minSpread = 0f,
@@ -134,7 +123,8 @@ namespace HVFT.Skills
                     isCrit = Util.CheckRoll(body.crit, body.master),
                     hitEffectPrefab = hitEffectPrefab,
                     stopperMask = LayerIndex.noCollision.mask,
-                    bulletCount = 1
+                    bulletCount = 1,
+                    tracerEffectPrefab = BigTracer.tracer
                 }.Fire();
                 FireCount = 0;
             }

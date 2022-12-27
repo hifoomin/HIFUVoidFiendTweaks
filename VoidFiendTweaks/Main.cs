@@ -32,7 +32,6 @@ namespace HVFT
 
         /* TODO:
         Fix Drown having no falloff somehow (Drown.cs:52)
-        Fix VFX pointing in the wrong place (Drown.cs:115, Drown.cs:116)
         Fix VFX size being way too small
         Idk where the fuck corrupted tokens are uhh, maybe add a component and change them dynamically based if vf has the corruption buffdef?
         Add Melee alt M1
