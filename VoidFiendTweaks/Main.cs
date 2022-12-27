@@ -12,6 +12,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using HIFUVoidFiendTweaks.VFX;
+using HIFUVoidFiendTweaks.Misc;
 
 namespace HVFT
 {
@@ -84,6 +85,8 @@ namespace HVFT
                     based.Init();
                 }
             }
+
+            CorruptedDescriptions.ChangeDescriptions();
         }
 
         public bool ValidateTweak(TweakBase tb)
