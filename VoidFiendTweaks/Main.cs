@@ -32,11 +32,10 @@ namespace HVFT
         public static ManualLogSource HVFTLogger;
 
         /* TODO:
-        Fix Drown having no falloff somehow (Drown.cs:52)
-        Fix VFX size being way too small
-        Idk where the fuck corrupted tokens are uhh, maybe add a component and change them dynamically based if vf has the corruption buffdef?
+        Add decaying armor instead of instant -60 (probably 15 or 20/s)
+        Fix VFX size being way too small (impossible)
         Add Melee alt M1
-            Lunge forward, dealing x%, every third hit charges? Uncorrupted
+            Lunge forward, dealing x%, every second hit charges? Uncorrupted
             Charge forward, dealing x%, every third performs a downwards slam punch? Corrupted, maybe a healing mechanic cause of -60 armor?
         */
 
@@ -53,8 +52,6 @@ namespace HVFT
 
             var uncorrFlood = Addressables.LoadAssetAsync<SkillDef>("RoR2/DLC1/VoidSurvivor/ChargeMegaBlaster.asset").WaitForCompletion();
             uncorrFlood.activationStateMachineName = "Flood";
-
-            BigTracer.Create();
 
             IEnumerable<Type> enumerable = from type in Assembly.GetExecutingAssembly().GetTypes()
                                            where !type.IsAbstract && type.IsSubclassOf(typeof(TweakBase))
@@ -86,6 +83,7 @@ namespace HVFT
                 }
             }
 
+            BigTracer.Create();
             CorruptedDescriptions.ChangeDescriptions();
         }
 

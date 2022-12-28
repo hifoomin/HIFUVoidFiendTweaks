@@ -22,7 +22,7 @@ namespace HVFT.Skills
 
         public override string SkillToken => "primary";
 
-        public override string DescText => "Fire a <style=cIsUtility>slowing</style> long-range beam for <style=cIsDamage>" + d(Damage) + " damage</style>. Every fouth shot fires a large devastating beam for an additional <style=cIsDamage>" + d(FourthDamage) + " damage</style>.";
+        public override string DescText => "Fire a <style=cIsUtility>slowing</style> long-range beam for <style=cIsDamage>" + d(Damage) + " damage</style>. Every fouth shot fires a large beam for an additional <style=cIsDamage>" + d(FourthDamage) + " damage</style>.";
 
         public override bool isVoid => false;
 
@@ -53,7 +53,7 @@ namespace HVFT.Skills
 
         private void CharacterBody_onBodyStartGlobal(CharacterBody body)
         {
-            if (body.name == "VoidSurvivor(Clone)")
+            if (body.name == "VoidSurvivorBody(Clone)")
             {
                 var df = body.GetComponent<DrownFour>();
                 if (!df)
@@ -126,7 +126,7 @@ namespace HVFT.Skills
                         2 => BulletAttack.FalloffModel.Buckshot,
                         _ => BulletAttack.FalloffModel.None
                     },
-                    smartCollision = false,
+                    smartCollision = true,
                     damage = body.damage * Drown.FourthDamage,
                     procCoefficient = 0f,
                     force = 0f,

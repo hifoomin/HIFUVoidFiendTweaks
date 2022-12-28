@@ -28,6 +28,7 @@ namespace HIFUVoidFiendTweaks.Misc
             LanguageAPI.Add("VOIDSURVIVOR_PRIMARY_ALT_DESCRIPTION", corruptedM1Description);
             LanguageAPI.Add("VOIDSURVIVOR_SECONDARY_ALT_DESCRIPTION", corruptedM2Description);
             LanguageAPI.Add("VOIDSURVIVOR_SPECIAL_ALT_DESCRIPTION", corruptedSpecialDescription);
+            LanguageAPI.Add("VOIDSURVIVOR_SPECIAL_NAME", "【Supp??ress』");
         }
     }
 }
