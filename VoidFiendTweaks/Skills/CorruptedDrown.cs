@@ -19,7 +19,7 @@ namespace HVFT.Skills
 
         public override void Init()
         {
-            Damage = ConfigOption(13f, "Damage", "Decimal. Vanilla is 20");
+            Damage = ConfigOption(12f, "Damage", "Decimal. Vanilla is 20");
             PPS = ConfigOption(4f, "Proc Coefficient Per Second", "Vanilla is 5");
             base.Init();
         }

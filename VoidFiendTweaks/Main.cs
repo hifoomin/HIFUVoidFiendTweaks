@@ -32,7 +32,6 @@ namespace HVFT
         public static ManualLogSource HVFTLogger;
 
         /* TODO:
-        Add decaying armor instead of instant -60 (probably 15 or 20/s)
         Fix VFX size being way too small (impossible)
         Add Melee alt M1
             Lunge forward, dealing x%, every second hit charges? Uncorrupted

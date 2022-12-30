@@ -30,7 +30,7 @@ namespace HIFUVoidFiendTweaks.Skills
             Damage = ConfigOption(4f, "Damage", "Decimal. Vanilla is 11");
             ProjectileSpeed = ConfigOption(40f, "Projectile Speed", "Vanilla is 70");
             Lifetime = ConfigOption(4f, "Projectile Duration", "Vanilla is 99");
-            Cooldown = ConfigOption(7f, "Cooldown", "Vanilla is 4");
+            Cooldown = ConfigOption(7.5f, "Cooldown", "Vanilla is 4");
             base.Init();
         }
 

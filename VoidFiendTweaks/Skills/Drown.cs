@@ -22,7 +22,7 @@ namespace HVFT.Skills
 
         public override string SkillToken => "primary";
 
-        public override string DescText => "Fire a <style=cIsUtility>slowing</style> long-range beam for <style=cIsDamage>" + d(Damage) + " damage</style>. Every fouth shot fires a large beam for an additional <style=cIsDamage>" + d(FourthDamage) + " damage</style>.";
+        public override string DescText => "Fire a <style=cIsUtility>slowing</style> long-range beam for <style=cIsDamage>" + d(Damage) + " damage</style>. Every fourth shot fires a medium beam for an additional <style=cIsDamage>" + d(FourthDamage) + " damage</style>.";
 
         public override bool isVoid => false;
 
@@ -40,7 +40,7 @@ namespace HVFT.Skills
             FalloffType = ConfigOption(1, "Falloff Type", "0 is None, 1 is Standard, 2 is Buckshot. Vanilla is 0");
             FourthDamage = ConfigOption(1.5f, "Fourth Hit Damage", "Decimal. Default is 1.5");
             FourthFalloff = ConfigOption(0, "Fourth Hit Falloff Type", "0 is None, 1 is Standard, 2 is Buckshot. Default is 0");
-            FourthRadius = ConfigOption(7.5f, "Fourth Hit Radius", "Default is 7.5");
+            FourthRadius = ConfigOption(5f, "Fourth Hit Radius", "Default is 5");
             base.Init();
         }
 
@@ -134,7 +134,8 @@ namespace HVFT.Skills
                     hitEffectPrefab = hitEffectPrefab,
                     stopperMask = LayerIndex.noCollision.mask,
                     bulletCount = 1,
-                    tracerEffectPrefab = BigTracer.tracer
+                    tracerEffectPrefab = BigTracer.tracer,
+                    damageType = DamageType.SlowOnHit
                 }.Fire();
                 FireCount = 0;
             }
