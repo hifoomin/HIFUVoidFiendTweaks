@@ -1,5 +1,4 @@
 ﻿using HIFUVoidFiendTweaks.Skills;
-using HVFT.Skills;
 using RoR2.Skills;
 using R2API;
 using UnityEngine.AddressableAssets;

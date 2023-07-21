@@ -1,6 +1,4 @@
-﻿using HVFT;
-
-namespace HIFUVoidFiendTweaks.Misc
+﻿namespace HIFUVoidFiendTweaks.Misc
 {
     internal class HRTTransitions : MiscBase
     {

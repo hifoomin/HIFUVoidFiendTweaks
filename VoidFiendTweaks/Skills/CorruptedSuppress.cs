@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements;
 
-namespace HVFT.Skills
+namespace HIFUVoidFiendTweaks.Skills
 {
     public class CorruptedSuppress : TweakBase
     {

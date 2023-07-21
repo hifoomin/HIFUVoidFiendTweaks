@@ -1,5 +1,4 @@
-﻿using HVFT;
-using MonoMod.Cil;
+﻿using MonoMod.Cil;
 using R2API;
 using RoR2;
 using UnityEngine.Networking;

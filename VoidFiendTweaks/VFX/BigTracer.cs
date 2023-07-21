@@ -1,4 +1,4 @@
-﻿using HVFT.Skills;
+﻿using HIFUVoidFiendTweaks.Skills;
 using R2API;
 using RoR2;
 using UnityEngine;

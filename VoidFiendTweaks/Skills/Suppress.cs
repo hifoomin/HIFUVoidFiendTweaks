@@ -3,7 +3,7 @@ using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace HVFT.Skills
+namespace HIFUVoidFiendTweaks.Skills
 {
     public class Suppress : TweakBase
     {

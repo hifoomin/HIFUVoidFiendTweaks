@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UIElements.Experimental;
 
-namespace HVFT.Skills
+namespace HIFUVoidFiendTweaks.Skills
 {
     public class Drown : TweakBase
     {
@@ -38,7 +38,7 @@ namespace HVFT.Skills
             Damage = ConfigOption(3f, "Damage", "Decimal. Vanilla is 3");
             Radius = ConfigOption(1f, "Radius", "Vanilla is 2");
             FalloffType = ConfigOption(1, "Falloff Type", "0 is None, 1 is Standard, 2 is Buckshot. Vanilla is 0");
-            FourthDamage = ConfigOption(1.5f, "Fourth Hit Damage", "Decimal. Default is 1.5");
+            FourthDamage = ConfigOption(1.75f, "Fourth Hit Damage", "Decimal. Default is 1.5");
             FourthFalloff = ConfigOption(0, "Fourth Hit Falloff Type", "0 is None, 1 is Standard, 2 is Buckshot. Default is 0");
             FourthRadius = ConfigOption(5f, "Fourth Hit Radius", "Default is 5");
             base.Init();

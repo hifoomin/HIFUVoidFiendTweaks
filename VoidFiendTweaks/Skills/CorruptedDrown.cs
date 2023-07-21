@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace HVFT.Skills
+namespace HIFUVoidFiendTweaks.Skills
 {
     public class CorruptedDrown : TweakBase
     {

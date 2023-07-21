@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HVFT
+namespace HIFUVoidFiendTweaks
 {
     public abstract class TweakBase<T> : TweakBase where T : TweakBase<T>
     {

@@ -13,8 +13,9 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using HIFUVoidFiendTweaks.VFX;
 using HIFUVoidFiendTweaks.Misc;
+using HarmonyLib;
 
-namespace HVFT
+namespace HIFUVoidFiendTweaks
 {
     [BepInDependency(LanguageAPI.PluginGUID)]
     [BepInDependency(PrefabAPI.PluginGUID)]
@@ -26,10 +27,17 @@ namespace HVFT
 
         public const string PluginAuthor = "HIFU";
         public const string PluginName = "HIFUVoidFiendTweaks";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.0.1";
 
         public static ConfigFile HVFTConfig;
+        public static ConfigFile HVFTBackupConfig;
+
+        public static ConfigEntry<bool> enableAutoConfig { get; set; }
+        public static ConfigEntry<string> latestVersion { get; set; }
+
         public static ManualLogSource HVFTLogger;
+
+        public static bool _preVersioning = false;
 
         /* TODO:
         Fix VFX size being way too small (impossible)
@@ -42,6 +50,19 @@ namespace HVFT
         {
             HVFTLogger = Logger;
             HVFTConfig = Config;
+
+            HVFTBackupConfig = new(Paths.ConfigPath + "\\" + PluginAuthor + "." + PluginName + ".Backup.cfg", true);
+            HVFTBackupConfig.Bind(": DO NOT MODIFY THIS FILES CONTENTS :", ": DO NOT MODIFY THIS FILES CONTENTS :", ": DO NOT MODIFY THIS FILES CONTENTS :", ": DO NOT MODIFY THIS FILES CONTENTS :");
+
+            enableAutoConfig = HVFTConfig.Bind("Config", "Enable Auto Config Sync", true, "Disabling this would stop HIFUVoidFiendTweaks from syncing config whenever a new version is found.");
+            _preVersioning = !((Dictionary<ConfigDefinition, string>)AccessTools.DeclaredPropertyGetter(typeof(ConfigFile), "OrphanedEntries").Invoke(HVFTConfig, null)).Keys.Any(x => x.Key == "Latest Version");
+            latestVersion = HVFTConfig.Bind("Config", "Latest Version", PluginVersion, "DO NOT CHANGE THIS");
+            if (enableAutoConfig.Value && (_preVersioning || (latestVersion.Value != PluginVersion)))
+            {
+                latestVersion.Value = PluginVersion;
+                ConfigManager.VersionChanged = true;
+                HVFTLogger.LogInfo("Config Autosync Enabled.");
+            }
 
             var vf = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion();
             var esm = vf.AddComponent<EntityStateMachine>();
