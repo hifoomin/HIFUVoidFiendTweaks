@@ -1,15 +1,15 @@
-﻿using UnityEngine;
+﻿using RoR2.Skills;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 namespace HIFUVoidFiendTweaks.Skills
 {
-    internal class SwingMelee1 : SwingMeleeBase
+    internal class SwingMelee1 : SwingMeleeBase, SteppedSkillDef.IStepSetter
     {
+        private int step = 0;
         public override void OnEnter()
         {
             base.OnEnter();
-
-            // todo: figure out what thing keb was talking about https://discord.com/channels/562704639141740588/562704639569428506/1057617081543184445
 
             beginStateSoundString = "Play_bandit2_m2_slash";
             baseDuration = 0.5f;
@@ -70,6 +70,11 @@ namespace HIFUVoidFiendTweaks.Skills
         public override void OnExit()
         {
             base.OnExit();
+        }
+
+        public void SetStep(int i)
+        {
+            step = i;
         }
     }
 }

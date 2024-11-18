@@ -14,6 +14,7 @@ using UnityEngine.AddressableAssets;
 using HIFUVoidFiendTweaks.VFX;
 using HIFUVoidFiendTweaks.Misc;
 using HarmonyLib;
+using HIFUVoidFiendTweaks.Skilldefs;
 
 namespace HIFUVoidFiendTweaks
 {
@@ -105,6 +106,7 @@ namespace HIFUVoidFiendTweaks
 
             BigTracer.Create();
             CorruptedDescriptions.ChangeDescriptions();
+            PermeateSD.Create();
         }
 
         public bool ValidateTweak(TweakBase tb)
