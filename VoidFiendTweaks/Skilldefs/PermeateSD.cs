@@ -18,7 +18,7 @@ namespace HIFUVoidFiendTweaks.Skilldefs
         public static SteppedSkillDef sd;
         public static string nameToken = "HVFT_VOIDSURVIVOR_PRIMARY_MELEE_NAME";
         public static float DAMAGE_COEFF = 2.2f;
-        public static float DAMAGE_COEFF_CORRUPT = 1.9f;
+        public static float DAMAGE_COEFF_CORRUPT = 2.9f;
         public static float NULLIFY_PENALTY_ATK = 0.025f;
         public static float NULLIFY_PENALTY_SPE = 0.1f;
         public static float LUNGE_DISTANCE = 24f;
