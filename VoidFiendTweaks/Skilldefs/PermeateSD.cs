@@ -81,7 +81,7 @@ namespace HIFUVoidFiendTweaks.Skilldefs
             LanguageAPI.Add("HVFT_VOIDSURVIVOR_PRIMARY_MELEE_DESCRIPTION", $"<style=cIsUtility>Agile</style>. Claw forward for <style=cIsDamage>{d(DAMAGE_COEFF)}% damage</style>. Every other strike <style=cIsUtility>lunges</style>.");
             ContentAddition.AddSkillDef(sd);
 
-            LanguageAPI.Add("KEYWORD_CORRUPTPERMEATE", $"<style=cKeywordName>【Corruption Upgrade】</style><style=cSub>Tear up targets for " + d(DAMAGE_COEFF) + "% damage rapidly, slowing their movement and attack speeds.</style>");
+            LanguageAPI.Add("KEYWORD_CORRUPTPERMEATE", $"<style=cKeywordName>【Corruption Upgrade】</style><style=cSub>Tear up targets for " + d(DAMAGE_COEFF_CORRUPT) + "% damage rapidly, slowing their movement and attack speeds.</style>");
 
             GameObject viend = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/VoidSurvivor/VoidSurvivorBody.prefab").WaitForCompletion();
             SkillLocator loc = viend.GetComponent<SkillLocator>();
