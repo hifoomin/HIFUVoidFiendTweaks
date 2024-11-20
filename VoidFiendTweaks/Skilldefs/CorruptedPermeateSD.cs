@@ -44,7 +44,7 @@ namespace HIFUVoidFiendTweaks.Skilldefs
             sd.stepCount = 2;
             sd.stepGraceDuration = 0.2f;
 
-            sd.icon = Addressables.LoadAssetAsync<SkillDef>("RoR2/Base/Croco/CrocoSpit.asset").WaitForCompletion().icon;
+            sd.icon = CorruptPermeateIcon.GetSprite();
             sd.skillNameToken = nameToken;
             sd.skillDescriptionToken = "HVFT_VOIDSURVIVOR_PRIMARY_MELEE_ALT_DESCRIPTION";
 
