@@ -1,10 +1,11 @@
-﻿{
-	"name": "MyFirstMod",
-	"version_number": "1.0.0",
-	"website_url": "",
-	"description": "My first Mod",
-	"dependencies": [
-		"bbepis-BepInExPack-5.4.9",
-		"RiskofThunder-HookGenPatcher-1.2.1"
-	]
+{
+  "name": "HIFUVoidFiendTweaks",
+  "version_number": "1.0.3",
+  "website_url": "",
+  "description": "Tweaks Void Fiend to be more fun and balanced. Fixed for SOTS, now with alt melee primary!",
+  "dependencies": [
+    "bbepis-BepInExPack-5.4.2113",
+    "RiskofThunder-R2API_Prefab-1.0.3",
+	  "RiskofThunder-R2API_Language-1.0.1"
+  ]
 }
